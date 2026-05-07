@@ -30,6 +30,8 @@ body {
     font-family: var(--font-main);
     color: var(--text-dark);
     background-color: var(--bg-white);
+    background-image: radial-gradient(rgba(148, 163, 184, 0.25) 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -1167,4 +1169,53 @@ footer {
         gap: 1rem;
         text-align: center;
     }
+}
+
+/* Custom Cursor & Magnetism */
+body.custom-cursor-active, 
+body.custom-cursor-active * {
+    cursor: none !important;
+}
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+    mix-blend-mode: difference;
+    opacity: 0;
+}
+
+.custom-cursor-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+}
+
+.custom-cursor.hover {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(46, 204, 113, 0.1);
+    border-color: transparent;
+    backdrop-filter: blur(2px);
+}
+
+.magnetic {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
 }

@@ -136,4 +136,65 @@ document.addEventListener('DOMContentLoaded', () => {
             showReview(currentReview + 1);
         }, 5000);
     }
+
+    // 6. Custom Cursor & Magnetism
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorDot = document.querySelector('.custom-cursor-dot');
+    
+    // Only enable on non-touch devices
+    if (window.matchMedia("(pointer: fine)").matches && cursor && cursorDot) {
+        document.body.classList.add('custom-cursor-active');
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let cursorX = 0;
+        let cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            cursorDot.style.left = `${mouseX}px`;
+            cursorDot.style.top = `${mouseY}px`;
+            cursorDot.style.opacity = '1';
+            cursor.style.opacity = '1';
+        });
+
+        const animateCursor = () => {
+            let dx = mouseX - cursorX;
+            let dy = mouseY - cursorY;
+            cursorX += dx * 0.15;
+            cursorY += dy * 0.15;
+            
+            cursor.style.left = `${cursorX}px`;
+            cursor.style.top = `${cursorY}px`;
+            
+            requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
+
+        const interactables = document.querySelectorAll('a, button, .gallery-item, .treatment-card');
+        interactables.forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            
+            if(el.classList.contains('btn') || el.classList.contains('nav-link')) {
+                el.classList.add('magnetic');
+            }
+        });
+
+        const magneticElements = document.querySelectorAll('.magnetic');
+        magneticElements.forEach(elem => {
+            elem.addEventListener('mousemove', (e) => {
+                const rect = elem.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                elem.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
+            });
+
+            elem.addEventListener('mouseleave', () => {
+                elem.style.transform = 'translate(0px, 0px)';
+            });
+        });
+    }
 });
