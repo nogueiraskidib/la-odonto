@@ -1151,6 +1151,26 @@ footer {
         grid-template-columns: 1fr;
     }
     
+    .diff-track {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .diff-track::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .diff-card {
+        min-width: 85vw;
+        scroll-snap-align: center;
+        flex-shrink: 0;
+    }
+    
     .hero-title {
         font-size: 2.5rem;
     }
